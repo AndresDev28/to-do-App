@@ -5,24 +5,31 @@ import {
   renderProjects, 
   renderTodos, 
   toggleProjectForm, 
-  handleProjectFormSubmit } 
+  handleProjectFormSubmit,
+  toggleTaskForm,
+  handleTaskFormSubmit } 
   from './modules/dom';
 import { saveProjectsToLocalStorage, loadProjectsFromLocalStorage } from './modules/storage';
 
 // Cargar proyectos al iniciar la aplicación
 let projects = loadProjectsFromLocalStorage();
 let defaultProject;
+export let selectedProjectId; // Almacena el ID del projecto seleccionado
 
 // Si no hay proyectos crear uno por defecto
 if (projects.length === 0) {
   defaultProject = new Project('Default Project');
   projects.push(defaultProject);
+  selectedProjectId = defaultProject.id; // Asigna el ID del proyecto 'Default'
+} else {
+  // Si hay proyctos guardados, selecciona el primero
+  selectedProjectId = projects[0].id;
 }
+
 const defaultTask1 = new Todo('Buy new house', 'In El campello', '2025-04-28', 'high', 'Esto es una prueba');
 if (defaultProject) {
   defaultProject.addTodo(defaultTask1);
 }
-
 
 // Guardar proyectos cada vez que se modifique la lista
 export function updateProjects() {
@@ -35,12 +42,26 @@ export function updateProjects() {
 saveProjectsToLocalStorage(projects)
 
 // Renderizar los proyectos y tareas
-renderProjects(projects); // Pasar un array de proyecto
+renderProjects(projects, updateSelectedProject); // Pasar un array de proyecto seleccionado
 renderTodos(defaultProject.getTodos());
 
-// Event listener para el boton Create Project
+// Event listeners
 const addProjectBtn = document.getElementById('add-project-btn');
-addProjectBtn.addEventListener('click', toggleProjectForm);
+const addTaskBtn = document.getElementById('add-task-btn')
 
-// Manejar el evento del envío del formulario
+
+addProjectBtn.addEventListener('click', toggleProjectForm);
+addTaskBtn.addEventListener('click', toggleTaskForm);
+
+// Manejar el eventos de envío de formularios (new-project-form y new-task-form)
 handleProjectFormSubmit(projects, updateProjects);
+handleTaskFormSubmit(projects, selectedProjectId, updateProjects);
+
+// Función que re-renderiza las tareas del proyecto seleccionado
+export function updateSelectedProject(projectId) {
+  selectedProjectId = projectId;
+  const selectedProject = projects.find(project => project.id === selectedProjectId);
+  if (selectedProject) {
+    renderTodos(selectedProject.getTodos());
+  }
+}

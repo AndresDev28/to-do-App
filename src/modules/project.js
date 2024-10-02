@@ -1,7 +1,8 @@
-
+import { v4 as uuidv4 } from "uuid";
 // Define the Project class
 class Project {
   constructor(title) {
+    this.id = uuidv4(); // Generar un ID único
     this.title = title;
     this.todos = [];
   }

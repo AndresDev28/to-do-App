@@ -30,10 +30,25 @@
         <h2 id="current-project"></h2>
         <ul id="todos-list">
           </ul>
-        <button id="add-todo-btn">New ToDo</button>
+        <button id="add-task-btn">New Task</button>
+
+        <form id="new-task-form" class="hidden">
+          <input type="text" id="task-title" placeholder="Title" required>
+          <input type="text" id="task-description" placeholder="Description" required>
+
+          <input type="date" id="task-due-date" required>
+          <select name="priority" id="task-priority">
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+          
+          <textarea id="task-notes" placeholder="Notes"></textarea>
+          <button type="submit">Create Task</button>
+        </form>
       </div>
 
-      <div class="hidden" id="todo-details">
+      <div class="hidden" id="task-details">
         </div>
     </main>
   </div>
