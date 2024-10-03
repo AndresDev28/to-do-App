@@ -9,26 +9,35 @@ export function renderProjects(projects) {
   projectsList.innerHTML = ''; // Limpiar la lista antes de renderizar
 
   projects.forEach(project => {
-    const projectItem = document.createElement('li');
+    const projectContainer = document.createElement('li');
+    const projectItem = document.createElement('button');
+    projectItem.classList.add('projectsItems')
     projectItem.textContent = project.title;
     projectItem.addEventListener('click', () => {
       updateSelectedProject(project.id) // Actualizar el proyecto seleccionado
       console.log(`Has seleccionado el proyecto ${project.title}`);
     });
 
-    projectsList.appendChild(projectItem);
+    projectContainer.appendChild(projectItem);
+    projectsList.appendChild(projectContainer);
   });
 }
 // Función para renderizar los todos
 export function renderTodos(todos) {
-  const todoList = document.getElementById('todos-list');
+  const todoList = document.getElementById('todo-list');
   todoList.innerHTML = '';
 
   todos.forEach(todo => {
     const todoItem = document.createElement('li');
     todoItem.textContent = todo.title;
+
+    // Agregar event listener para mostrar los detalles
+    todoItem.addEventListener('click', () => {
+      showTaskDetails(todo);
+    });
+
     todoList.appendChild(todoItem);
-  })
+  });
 }
 
 // Función para mostrar el modal de formulario de crear proyecto
@@ -94,4 +103,18 @@ export function handleTaskFormSubmit(projects) {
 
     updateProjects(projects); // Actualizar y guardar en localStorage
   })
+}
+
+// Función para mostrar los detalles de una tarea
+export function showTaskDetails(task) {
+  const taskDetails = document.getElementById('task-details');
+  taskDetails.classList.remove('hidden');
+
+  taskDetails.innerHTML = `
+    <h3>${task.title}</h3>
+    <p>Description: ${task.description}</p>
+    <p>Due date: ${task.dueDate}</p>
+    <p>Priority: ${task.priority}</p>
+    <p>Notes: ${task.notes}</p>
+  `;
 }

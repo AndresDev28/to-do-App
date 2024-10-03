@@ -32,8 +32,7 @@ if (defaultProject) {
 }
 
 // Guardar proyectos cada vez que se modifique la lista
-export function updateProjects() {
-  localStorage.setItem('prueba', 'Hola'); 
+export function updateProjects() { 
   //...lógica para actualizar la lista de proyectos
   saveProjectsToLocalStorage(projects);
   renderProjects(projects); // Re-renderiza la lista
@@ -46,8 +45,8 @@ renderProjects(projects, updateSelectedProject); // Pasar un array de proyecto s
 renderTodos(defaultProject.getTodos());
 
 // Event listeners
-const addProjectBtn = document.getElementById('add-project-btn');
-const addTaskBtn = document.getElementById('add-task-btn')
+const addProjectBtn = document.getElementById('new-project-btn');
+const addTaskBtn = document.getElementById('new-todo-btn')
 
 
 addProjectBtn.addEventListener('click', toggleProjectForm);

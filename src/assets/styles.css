@@ -1,30 +1,71 @@
 body {
   font-family: "PT Serif", serif;
   margin: 0;
-  background-color: #f4f4f4;
+  background-color: #F3F4F6;
 }
 
 .container {
-  max-width: 800px;
-  margin: 50px auto;
-  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  max-width: 1280px;
+  margin: 20px auto;
+  background-color: #F3F4F6;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) ;
 }
 
-h1, h2 {
+.title-app-text {
+  color: #4f46E5;
+  font-weight: 700;
+  text-align: center;
+}
+
+.projects-todos-container {
+  display: flex;
+  gap: 2rem;
+}
+
+.projects {
+  width: 25%;
+}
+
+#projects-list {
+  width: 100%;
+}
+
+#new-project-btn {
+  width: 100%;
+  background-color: #22C55E;
+  cursor: pointer;
+}
+
+.projectsItems{
+  width: 100%;
+  background-color: #fff;
+  color: black;
+  cursor: pointer;
+}
+
+.selectedProject {
+  width: 100%;
+  background-color: #4f46E5;
+  color: #fff;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+.todos {
+  width: 75%;
+}
+
+
+h2 {
   color: #333;
 }
 
 ul {
   list-style: none;
   padding: 0;
-}
-
-li {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
 }
 
 button {
@@ -38,4 +79,17 @@ button {
 
 .hidden {
   display: none;
+}
+
+/* .todos {
+  display: flex; 
+  flex: 2; /* la columna de tareas ocupa 2 partes del espacion 
+} */
+
+#todo-details {
+  /* Estilos para el panel lateral */
+  width: 300px; 
+  margin-left: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
 }

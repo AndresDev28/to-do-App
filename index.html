@@ -9,48 +9,46 @@
 </head>
 <body>
   <div class="container">
-    <header>
-      <h1>TODO App</h1>
-    </header>
-
-    <main>
+    <h1 class="title-app-text">ToDo List App</h1>
+    <div class="projects-todos-container">
+      <!-- Projects Selection -->
       <div class="projects">
-        <h2>Projects</h2>
+        <h2 class="projects-title">Projects</h2>
         <ul id="projects-list">
-          </ul>
-        <button id="add-project-btn">New Project</button>
-
-        <form id="new-project-form" class="hidden">
-          <input type="text" id="project-name" placeholder="Project name">
-          <button type="submit">Create Project</button>
-        </form>
+        </ul>
+        <button id="new-project-btn">Add New Project</button>
       </div>
-
+      <!-- ToDo List -->
       <div class="todos">
-        <h2 id="current-project"></h2>
-        <ul id="todos-list">
-          </ul>
-        <button id="add-task-btn">New Task</button>
-
-        <form id="new-task-form" class="hidden">
-          <input type="text" id="task-title" placeholder="Title" required>
-          <input type="text" id="task-description" placeholder="Description" required>
-
-          <input type="date" id="task-due-date" required>
-          <select name="priority" id="task-priority">
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
-          </select>
-          
-          <textarea id="task-notes" placeholder="Notes"></textarea>
-          <button type="submit">Create Task</button>
-        </form>
+        <h2 class="todos-title">Todo Items</h2>
+        <div id="todo-list" class="todo-list"></div>
+        <button id="new-todo-btn" class="new-todo-btn">Add New ToDo</button>
       </div>
+    </div>
 
       <div class="hidden" id="task-details">
         </div>
-    </main>
+
+    <!-- Project form modal -->
+    <form id="new-project-form" class="hidden">
+      <input type="text" id="project-name" placeholder="Project name">
+      <button type="submit">Create Project</button>
+    </form>
+    <!-- ToDo form modal -->
+    <form id="new-task-form" class="hidden">
+      <input type="text" id="task-title" placeholder="Title" required>
+      <input type="text" id="task-description" placeholder="Description" required>
+
+      <input type="date" id="task-due-date" required>
+      <select name="priority" id="task-priority">
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+      </select>
+      
+      <textarea id="task-notes" placeholder="Notes"></textarea>
+      <button type="submit">Create Task</button>
+    </form>
   </div>
 </body>
 </html>
