@@ -26,7 +26,7 @@ if (projects.length === 0) {
   selectedProjectId = projects[0].id;
 }
 
-const defaultTask1 = new Todo('Buy new house', 'In El campello', '2025-04-28', 'high', 'Esto es una prueba');
+const defaultTask1 = new Todo('Finally Understand Regex', 'Crack the code of those cryptic symbols and become a regex master. No more copy-pasting from Stack Overflow! (Okay, maybe a little.)', '2025-04-28', 'high', 'Funny To-Do');
 if (defaultProject) {
   defaultProject.addTodo(defaultTask1);
 }
@@ -44,13 +44,38 @@ saveProjectsToLocalStorage(projects)
 renderProjects(projects, updateSelectedProject); // Pasar un array de proyecto seleccionado
 renderTodos(defaultProject.getTodos());
 
-// Event listeners
+
 const addProjectBtn = document.getElementById('new-project-btn');
-const addTaskBtn = document.getElementById('new-todo-btn')
+const addTaskBtn = document.getElementById('new-todo-btn');
+const cancelProjectBtn = document.querySelector('.cancel-project-btn');
+const cancelTaskBtn = document.querySelector('.cancel-task-btn');
+const editIcon = document.querySelector('.fa-edit');
 
-
+// Event listeners
 addProjectBtn.addEventListener('click', toggleProjectForm);
+addProjectBtn.addEventListener('click', () => {
+  overlay.style.display = 'block';
+})
 addTaskBtn.addEventListener('click', toggleTaskForm);
+addTaskBtn.addEventListener('click', () => {
+  overlay.style.display = 'block';
+});
+
+cancelProjectBtn.addEventListener('click', toggleProjectForm);
+cancelProjectBtn.addEventListener('click', () => {
+  overlay.style.display = 'none';
+});
+
+cancelTaskBtn.addEventListener('click', toggleTaskForm);
+cancelTaskBtn.addEventListener('click', () => {
+  overlay.style.display = 'none';
+  console.log('click en cancelBtn');
+});
+
+editIcon.addEventListener('click', () => {
+  alert("Editar tarea!");
+})
+
 
 // Manejar el eventos de envío de formularios (new-project-form y new-task-form)
 handleProjectFormSubmit(projects, updateProjects);

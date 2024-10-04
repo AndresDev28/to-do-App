@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TODO APP</title>
   <link href="https://fonts.googleapis.com/css2?family=Gasoek+One&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
   <div class="container">
@@ -29,26 +29,58 @@
       <div class="hidden" id="task-details">
         </div>
 
-    <!-- Project form modal -->
-    <form id="new-project-form" class="hidden">
-      <input type="text" id="project-name" placeholder="Project name">
-      <button type="submit">Create Project</button>
-    </form>
-    <!-- ToDo form modal -->
-    <form id="new-task-form" class="hidden">
-      <input type="text" id="task-title" placeholder="Title" required>
-      <input type="text" id="task-description" placeholder="Description" required>
-
-      <input type="date" id="task-due-date" required>
-      <select name="priority" id="task-priority">
-        <option value="high">High</option>
-        <option value="medium">Medium</option>
-        <option value="low">Low</option>
-      </select>
       
-      <textarea id="task-notes" placeholder="Notes"></textarea>
-      <button type="submit">Create Task</button>
-    </form>
+    <!-- Project form modal -->
+    <div class="project-form-modal hidden">
+      <h3 class="form-modal-title">Add/Edit Project</h3>
+      <form id="new-project-form">
+        <div class="form-group">
+          <label for="projectTitle" class="form-text-label">Project Name</label>
+          <input type="text" id="project-name" required>
+        </div>
+        <div class="buttons">
+          <button type="button" class="cancel-project-btn">Cancel</button>
+          <button type="submit" class="create-project-btn">Create Project</button>
+        </div>  
+      </form>
+    </div>
+    
+    <!-- ToDo form modal -->
+    <div class="task-form-modal hidden">
+      <h3 class="form-modal-title">Add/Edit ToDo</h3>
+      <form id="new-task-form">
+        <div class="form-group">
+          <label for="todoTitle" class="form-text-label">Title</label>
+          <input type="text" id="task-title" required>
+        </div>
+        <div class="form-group">
+          <label for="todoDescription" class="form-text-label">Description</label>
+          <textarea type="text" id="task-description" name="description" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="todoDueDate" class="form-text-label">Due Date</label>
+          <input type="date" id="task-due-date" required>
+        </div>
+        <div class="form-group">
+          <label for="todoPriority" class="form-text-label">Priority</label>
+          <select name="priority" id="task-priority" required>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="todoNotes" class="form-text-label">Notes</label>
+          <textarea id="task-notes" rows="2"></textarea>
+        </div>
+        <div class="buttons">
+          <button type="button" class="cancel-task-btn">Cancel</button>
+        <button type="submit" class="save-task-btn">Save</button>
+        </div>        
+      </form>
+    </div>
+    
   </div>
+  <div id="overlay" style="display: none;"></div>
 </body>
 </html>

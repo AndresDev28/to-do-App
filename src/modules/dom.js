@@ -28,27 +28,67 @@ export function renderTodos(todos) {
   todoList.innerHTML = '';
 
   todos.forEach(todo => {
-    const todoItem = document.createElement('li');
-    todoItem.textContent = todo.title;
+    const todoCard = document.createElement('li');
+    todoCard.classList.add('todo-card');
 
-    // Agregar event listener para mostrar los detalles
-    todoItem.addEventListener('click', () => {
-      showTaskDetails(todo);
-    });
+    const topRow = document.createElement('div'); // Aquí van El título y los iconos (check, edit & delete)
+    topRow.classList.add('card-rows');
+    const todoTitle = document.createElement('h3'); // Título del ToDo
+    todoTitle.textContent = todo.title;
+    const icons = document.createElement('div'); // Contenedor de iconos check, edit y delete
+    icons.classList.add('icons');
+    const checkedIcon = document.createElement('i');
+    checkedIcon.classList.add('fas', 'fa-check'); // Agregar las clases de Font Awesome
+    checkedIcon.alt = 'Mark as completed'; // Atributo alt para el icono de "check"
 
-    todoList.appendChild(todoItem);
+    const editIcon = document.createElement('i');
+    editIcon.classList.add('fas', 'fa-edit');
+    editIcon.alt = 'Edit task'; // Atributo alt para el icono de "edit"
+
+    const deleteIcon = document.createElement('i');
+    deleteIcon.classList.add('fas', 'fa-trash');
+    deleteIcon.alt = 'Delete task'; // Atributo alt para el icono de "delete"
+    // Agregar elementos a topRow
+    icons.appendChild(checkedIcon); 
+    icons.appendChild(editIcon);
+    icons.appendChild(deleteIcon);
+    topRow.appendChild(todoTitle);
+    topRow.appendChild(icons);
+
+    const middleRow = document.createElement('div');
+    middleRow.classList.add('card-rows');
+    const todoDescription = document.createElement('p');
+    todoDescription.textContent = todo.description;
+    // Agregar elementos a middleRow
+    middleRow.appendChild(todoDescription);
+
+    const bottomRow = document.createElement('div');
+    bottomRow.classList.add('card-rows')
+    const todoDueDate = document.createElement('span');
+    todoDueDate.textContent = todo.dueDate;
+    const todoPriority = document.createElement('span');
+    todoPriority.textContent =  todo.priority;
+    // Agregar elementos a bottonRow
+    bottomRow.appendChild(todoDueDate);
+    bottomRow.appendChild(todoPriority);
+
+    // Agregar elementos a todoCard
+    todoCard.appendChild(topRow);
+    todoCard.appendChild(middleRow);
+    todoCard.appendChild(bottomRow);
+    todoList.appendChild(todoCard);
   });
 }
 
 // Función para mostrar el modal de formulario de crear proyecto
 export function toggleProjectForm() {
-  const newProjectFormItem = document.getElementById('new-project-form');
-  newProjectFormItem.classList.toggle('hidden');
+  const newProjectForm = document.querySelector('.project-form-modal');
+  newProjectForm.classList.toggle('hidden');
 }
 
 // Función para mostrar el modal de formulario de nueva tarea
 export function toggleTaskForm() {
-  const newTaskForm = document.getElementById('new-task-form');
+  const newTaskForm = document.querySelector('.task-form-modal');
   newTaskForm.classList.toggle('hidden');
 }
 
@@ -102,6 +142,7 @@ export function handleTaskFormSubmit(projects) {
     toggleTaskForm();
 
     updateProjects(projects); // Actualizar y guardar en localStorage
+    overlay.style.display = 'none'; // Quita el overlay de los modales
   })
 }
 
@@ -117,4 +158,9 @@ export function showTaskDetails(task) {
     <p>Priority: ${task.priority}</p>
     <p>Notes: ${task.notes}</p>
   `;
+}
+
+// Función para cambiar el color de texto de la propiedad de la tarea
+function priorityColor(priority) {
+
 }
