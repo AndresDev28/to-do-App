@@ -35,6 +35,11 @@ if (defaultProject) {
 export function updateProjects() { 
   //...lógica para actualizar la lista de proyectos
   saveProjectsToLocalStorage(projects);
+
+  //Obtener el último proyecto creado (el que se acaba de agregar)
+  const lastProject = projects[projects.length -1];
+  // Actualizar el proyecto seleccionado
+  updateSelectedProject(lastProject.id);
   renderProjects(projects); // Re-renderiza la lista
 }
 

@@ -49,11 +49,10 @@ body {
 
 .selectedProject {
   width: 100%;
-  background-color: #4f46E5;
+  background-color: #6366F1;
   color: #fff;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
   cursor: pointer;
+  margin-bottom: 1rem;
 }
 
 .todos {
@@ -217,3 +216,4 @@ button {
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 1000;
 }
+

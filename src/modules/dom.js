@@ -11,16 +11,34 @@ export function renderProjects(projects) {
   projects.forEach(project => {
     const projectContainer = document.createElement('li');
     const projectItem = document.createElement('button');
-    projectItem.classList.add('projectsItems')
+
+    // Agregar la clase 'projectsItems' a todos los proyectos
+    projectItem.classList.add('projectsItems'); 
+
     projectItem.textContent = project.title;
+    // Agregar el atributo data-project-id
+    projectItem.dataset.projectId = project.id; 
+
     projectItem.addEventListener('click', () => {
-      updateSelectedProject(project.id) // Actualizar el proyecto seleccionado
-      console.log(`Has seleccionado el proyecto ${project.title}`);
+      updateSelectedProject(project.id); 
+
+      // Eliminar la clase 'selectedProject' de todos los proyectos
+      const projectItems = document.querySelectorAll('.projectsItems');
+      projectItems.forEach(item => item.classList.remove('selectedProject')); 
+
+      // Agregar la clase 'selectedProject' al proyecto seleccionado
+      projectItem.classList.add('selectedProject'); 
     });
 
     projectContainer.appendChild(projectItem);
     projectsList.appendChild(projectContainer);
   });
+
+  // Agregar la clase 'selectedProject' al proyecto seleccionado
+  const selectedProjectItem = document.querySelector(`.projectsItems[data-project-id="${selectedProjectId}"]`);
+  if (selectedProjectItem) {
+    selectedProjectItem.classList.add('selectedProject');
+  }
 }
 // Función para renderizar los todos
 export function renderTodos(todos) {
@@ -107,6 +125,7 @@ export function handleProjectFormSubmit(projects) {
     toggleProjectForm();
 
     updateProjects(projects);
+    overlay.style.display = 'none'; // Quita el overlay de los modales
   });
 }
 
@@ -142,22 +161,8 @@ export function handleTaskFormSubmit(projects) {
     toggleTaskForm();
 
     updateProjects(projects); // Actualizar y guardar en localStorage
-    overlay.style.display = 'none'; // Quita el overlay de los modales
+    overlay.style.display = 'none'; // Quita el overlay del modal
   })
-}
-
-// Función para mostrar los detalles de una tarea
-export function showTaskDetails(task) {
-  const taskDetails = document.getElementById('task-details');
-  taskDetails.classList.remove('hidden');
-
-  taskDetails.innerHTML = `
-    <h3>${task.title}</h3>
-    <p>Description: ${task.description}</p>
-    <p>Due date: ${task.dueDate}</p>
-    <p>Priority: ${task.priority}</p>
-    <p>Notes: ${task.notes}</p>
-  `;
 }
 
 // Función para cambiar el color de texto de la propiedad de la tarea
