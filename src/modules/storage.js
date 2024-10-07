@@ -26,16 +26,18 @@ export function loadProjectsFromLocalStorage() {
     // Convertir los datos en objetos Project y Todo
     return projectData.map(projectData => {
       const project = new Project(projectData.title);
-      project.todos = projectData.todos.map(todoData =>
-        new Todo(
+      project.todos = projectData.todos.map(todoData => {
+        const todo = new Todo(
           todoData.title,
           todoData.description,
           todoData.dueDate,
           todoData.priority,
           todoData.checklist,
           todoData.completed
-        )
-      );
+        );
+        todo.completed = todoData.completed || false;
+        return todo;
+      });
       return project;
     });
   } else {

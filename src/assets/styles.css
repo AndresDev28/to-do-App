@@ -80,6 +80,14 @@ body {
   transform: scale(1.05);
 }
 
+.completed {
+
+  background-color: rgb(183, 181, 181);
+}
+.todo-title-completed {
+  text-decoration: line-through;
+}
+
 .card-rows {
   display: flex;
   justify-content: space-between;

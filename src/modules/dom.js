@@ -2,6 +2,7 @@ import Project from './project';
 import Todo from './todo';
 import { updateProjects, updateSelectedProject, selectedProjectId } from '../index';
 import { saveProjectsToLocalStorage } from './storage';
+import { toggleTodoComplete, editTodo, deleteTodo } from './controllers';
 
 // Funcion para agregar un nuevo proyecto
 export function renderProjects(projects) {
@@ -41,7 +42,7 @@ export function renderProjects(projects) {
   }
 }
 // Función para renderizar los todos
-export function renderTodos(todos) {
+export function renderTodos(todos, projects, updateProjects) {
   const todoList = document.getElementById('todo-list');
   todoList.innerHTML = '';
 
@@ -57,15 +58,16 @@ export function renderTodos(todos) {
     icons.classList.add('icons');
     const checkedIcon = document.createElement('i');
     checkedIcon.classList.add('fas', 'fa-check'); // Agregar las clases de Font Awesome
-    checkedIcon.alt = 'Mark as completed'; // Atributo alt para el icono de "check"
+    checkedIcon.setAttribute('aria-label', 'Mark as completed'); // Atributo alt para el icono de "check"
 
     const editIcon = document.createElement('i');
     editIcon.classList.add('fas', 'fa-edit');
-    editIcon.alt = 'Edit task'; // Atributo alt para el icono de "edit"
-
+    editIcon.setAttribute('aria-label', 'Edit task'); // Atributo alt para el icono de "edit"
+    
     const deleteIcon = document.createElement('i');
     deleteIcon.classList.add('fas', 'fa-trash');
-    deleteIcon.alt = 'Delete task'; // Atributo alt para el icono de "delete"
+    deleteIcon.setAttribute('aria-label', 'Delete task'); // Atributo alt para el icono de "delete"
+    
     // Agregar elementos a topRow
     icons.appendChild(checkedIcon); 
     icons.appendChild(editIcon);
@@ -95,6 +97,22 @@ export function renderTodos(todos) {
     todoCard.appendChild(middleRow);
     todoCard.appendChild(bottomRow);
     todoList.appendChild(todoCard);
+
+    // Verificar si el ToDo está marcado como compeltado
+    if (todo.completed) {
+      todoCard.classList.add('completed');
+      todoTitle.classList.add('todo-title-completed');
+    }
+    
+    // Agregar event listner al icono de check
+    checkedIcon.addEventListener('click', () => {
+      todo.toggleCompleted(); // Cambiar el estado de completado en el objeto Todo
+      todoCard.classList.toggle('completed');
+      todoTitle.classList.toggle('todo-title-completed');
+
+      // Actualizar el proyecto en localStorage
+      saveProjectsToLocalStorage(projects);
+    });
   });
 }
 

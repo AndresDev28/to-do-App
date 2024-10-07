@@ -11,7 +11,7 @@ import {
   from './modules/dom';
 import { saveProjectsToLocalStorage, loadProjectsFromLocalStorage } from './modules/storage';
 
-// Cargar proyectos al iniciar la aplicación
+// Cargar proyectos al iniciar la aplicación desde localStorage
 let projects = loadProjectsFromLocalStorage();
 let defaultProject;
 export let selectedProjectId; // Almacena el ID del projecto seleccionado
@@ -30,7 +30,7 @@ const defaultTask1 = new Todo('Finally Understand Regex', 'Crack the code of tho
 if (defaultProject) {
   defaultProject.addTodo(defaultTask1);
 }
-
+saveProjectsToLocalStorage(projects);
 // Guardar proyectos cada vez que se modifique la lista
 export function updateProjects() { 
   //...lógica para actualizar la lista de proyectos
@@ -43,6 +43,7 @@ export function updateProjects() {
   renderProjects(projects); // Re-renderiza la lista
 }
 
+// Guardar proyectos al iniciar la aplicación
 saveProjectsToLocalStorage(projects)
 
 // Renderizar los proyectos y tareas
@@ -91,6 +92,6 @@ export function updateSelectedProject(projectId) {
   selectedProjectId = projectId;
   const selectedProject = projects.find(project => project.id === selectedProjectId);
   if (selectedProject) {
-    renderTodos(selectedProject.getTodos());
+    renderTodos(selectedProject.getTodos(), projects, updateProjects);
   }
 }
