@@ -2,7 +2,7 @@ import Project from './project';
 import Todo from './todo';
 import { updateProjects, updateSelectedProject, selectedProjectId } from '../index';
 import { saveProjectsToLocalStorage } from './storage';
-import { toggleTodoComplete, editTodo, deleteTodo } from './controllers';
+import { toggleTodoComplete, editTodo, deleteTodo, deleteProject } from './controllers';
 
 // Funcion para agregar un nuevo proyecto
 export function renderProjects(projects) {
@@ -12,16 +12,32 @@ export function renderProjects(projects) {
   projects.forEach(project => {
     const projectContainer = document.createElement('li');
     const projectItem = document.createElement('button');
+    
 
     // Agregar la clase 'projectsItems' a todos los proyectos
-    projectItem.classList.add('projectsItems'); 
+    projectItem.classList.add('projectsItems');
+    
+    // Crear el contenedor para el título y el icono
+    const projectContent = document.createElement('span');
+    projectContent.textContent = project.title;
+    projectContent.classList.add('project-title');
 
-    projectItem.textContent = project.title;
+    // Crear el icono de eliminar
+    const deleteIcon = document.createElement('i');
+    deleteIcon.classList.add('fas', 'fa-trash', 'project-delete-icon');
+    deleteIcon.setAttribute('aria-label', 'Delete project');
+
+    // Agregar el titulo y el icono al botón
+    projectItem.appendChild(projectContent);
+    projectItem.appendChild(deleteIcon);
+
     // Agregar el atributo data-project-id
     projectItem.dataset.projectId = project.id; 
 
-    projectItem.addEventListener('click', () => {
-      updateSelectedProject(project.id); 
+    projectItem.addEventListener('click', (event) => {
+      // Evitar que el click en el icono de eliminar seleccione el proyecto
+      if (event.target !== deleteIcon) {
+        updateSelectedProject(project.id); 
 
       // Eliminar la clase 'selectedProject' de todos los proyectos
       const projectItems = document.querySelectorAll('.projectsItems');
@@ -29,7 +45,18 @@ export function renderProjects(projects) {
 
       // Agregar la clase 'selectedProject' al proyecto seleccionado
       projectItem.classList.add('selectedProject'); 
+      }
     });
+
+    // Agregar el evento click al icono de eliminar
+    deleteIcon.addEventListener('click', (event) => {
+      event.stopPropagation(); // Evitar que el evento se propague al botón
+      const confirmDelete = confirm('Are you sure you want to delete this Project?');
+      if (confirmDelete) {
+        deleteProject(project.id, projects);
+      }
+    })
+    
 
     projectContainer.appendChild(projectItem);
     projectsList.appendChild(projectContainer);

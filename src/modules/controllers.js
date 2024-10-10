@@ -1,4 +1,14 @@
 import { updateProjects } from "../index";
+
+export function deleteProject(projectId, projects) {
+  const projectIndex = projects.findIndex(p => p.id === projectId)
+  if (projectIndex !== -1) {
+    projects.splice(projectIndex, 1);
+    updateProjects(projects);
+    return { success: true };
+  }
+}
+
 export function toggleTodoComplete(todo, projects) {
   todo.toggleCompleted();
   console.log("Y en controllers.js tambien")
