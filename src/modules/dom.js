@@ -44,6 +44,10 @@ export function renderProjects(projects) {
 // Función para renderizar los todos
 export function renderTodos(todos, projects, updateProjects) {
   const todoList = document.getElementById('todo-list');
+  if (!todoList) {
+    console.error('No se encontró el elemento #todo-list');
+    return;
+  }
   todoList.innerHTML = '';
 
   todos.forEach(todo => {
@@ -113,6 +117,29 @@ export function renderTodos(todos, projects, updateProjects) {
       // Actualizar el proyecto en localStorage
       saveProjectsToLocalStorage(projects);
     });
+
+    // Agregar event listener al icono 'delete'
+    deleteIcon.addEventListener('click', () => {
+      // Mostrar un cuadro de diálogo de confirmación
+      const confirmDelete = confirm('Are you sure you want to delete this ToDo?');
+      
+      if (confirmDelete) {
+        const result = deleteTodo(todo.id, projects);
+        if (result.success) {
+          todoCard.remove();
+          updateProjects(projects);
+          if (result.projectId === selectedProjectId) {
+            const updatedProject = projects.find(p => p.id === selectedProjectId);
+            if (updatedProject) {
+              renderTodos(updatedProject.getTodos(), projects, updateProjects);
+            }
+          }
+        } else {
+          console.error('No se pudo eliminar la tarea', result.message);
+        }
+      }
+      // Si el usuario cancela, no se hace nada
+    });
   });
 }
 
@@ -166,7 +193,9 @@ export function handleTaskFormSubmit(projects) {
     if (selectedProject) {
       selectedProject.addTodo(newTask);
       // Llamar a renderTodos() con las tareas del proyecto seleccionado
-      renderTodos(selectedProject.getTodos());
+      renderTodos(selectedProject.getTodos(), projects, updateProjects);
+    } else {
+      console.error('No se encontró el proyecto seleccionado');
     }
 
     // limpiar campos del formulario ...
@@ -185,5 +214,10 @@ export function handleTaskFormSubmit(projects) {
 
 // Función para cambiar el color de texto de la propiedad de la tarea
 function priorityColor(priority) {
-
+  switch (priority) {
+    case 'high': return;
+    case 'medium': return;
+    case 'low': return;
+  }
 }
+

@@ -48,7 +48,7 @@ saveProjectsToLocalStorage(projects)
 
 // Renderizar los proyectos y tareas
 renderProjects(projects, updateSelectedProject); // Pasar un array de proyecto seleccionado
-renderTodos(defaultProject.getTodos());
+renderTodos(defaultProject.getTodos(), projects, updateProjects);
 
 
 const addProjectBtn = document.getElementById('new-project-btn');
